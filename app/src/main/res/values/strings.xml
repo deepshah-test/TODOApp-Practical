@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TODOApp-Practical</string>
+    <string name="my_to_do">My To Do</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_data">No Data</string>
+    <string name="lorem_ipsum_paragraph">lorem ipsum paragraph bhjsdbjhsd jfhsbf jbhjbwejhf kjhekwek kjehkjwehk kehkjhwkd kehjkwehkw ejkwkjwe kjkwehkjwe ehjkhkkw ljltjler kfjkhekhek jhkhek jehkherk fkerjfkje khkehkfe kejkhekhek elejljle ljlkjle jlejle ljrlwejrlw ljrlwjrlw jrlwjrl ljrlwjlr jrlwjrlwl</string>
 </resources>
