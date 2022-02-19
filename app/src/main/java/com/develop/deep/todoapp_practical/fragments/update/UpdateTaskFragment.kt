@@ -2,6 +2,7 @@ package com.develop.deep.todoapp_practical.fragments.update
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,12 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.develop.deep.todoapp_practical.R
 import com.develop.deep.todoapp_practical.TODOViewModel
 import com.develop.deep.todoapp_practical.interfaces.OperationInterface
 import com.develop.deep.todoapp_practical.models.Task
+import com.develop.deep.todoapp_practical.util.ToDoUtil
 import kotlinx.android.synthetic.main.fragment_update_task.*
 import kotlinx.android.synthetic.main.fragment_update_task.view.*
 import java.text.SimpleDateFormat
@@ -30,6 +33,7 @@ class UpdateTaskFragment : Fragment() {
 
     private lateinit var operationCallback : OperationInterface
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -123,7 +127,9 @@ class UpdateTaskFragment : Fragment() {
             val builder = AlertDialog.Builder(requireContext())
 
             builder.setPositiveButton("Yes"){ _, _ ->
-                todoViewModel.updateTask(task,operationCallback)
+                if(ToDoUtil.isOnline(requireContext())) {
+                    todoViewModel.updateTask(task, operationCallback)
+                }
             }
 
             builder.setNegativeButton("No"){ _, _ -> }

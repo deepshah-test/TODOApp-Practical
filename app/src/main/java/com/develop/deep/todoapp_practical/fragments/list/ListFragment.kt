@@ -2,12 +2,14 @@ package com.develop.deep.todoapp_practical.fragments.list
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -20,6 +22,7 @@ import com.develop.deep.todoapp_practical.interfaces.AfterItemDeleteInterface
 import com.develop.deep.todoapp_practical.interfaces.ItemDeleteInterface
 import com.develop.deep.todoapp_practical.interfaces.ItemUpdateInterface
 import com.develop.deep.todoapp_practical.models.Task
+import com.develop.deep.todoapp_practical.util.ToDoUtil
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
@@ -113,13 +116,19 @@ class ListFragment : Fragment() {
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun deleteItem(taskId: Int) {
-        todoViewModel.deleteTask(taskId,afterItemDeleteCallback)
+        if(ToDoUtil.isOnline(requireContext())) {
+            todoViewModel.deleteTask(taskId, afterItemDeleteCallback)
+        }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onResume() {
         super.onResume()
-        todoViewModel.getTaskList()
+        if(ToDoUtil.isOnline(requireContext())) {
+            todoViewModel.getTaskList()
+        }
     }
 
 

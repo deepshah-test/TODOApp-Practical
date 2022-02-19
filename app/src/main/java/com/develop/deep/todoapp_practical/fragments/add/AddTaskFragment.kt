@@ -1,6 +1,7 @@
 package com.develop.deep.todoapp_practical.fragments.add
 
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,11 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.develop.deep.todoapp_practical.R
 import com.develop.deep.todoapp_practical.TODOViewModel
 import com.develop.deep.todoapp_practical.interfaces.OperationInterface
 import com.develop.deep.todoapp_practical.models.Task
+import com.develop.deep.todoapp_practical.util.ToDoUtil
 import kotlinx.android.synthetic.main.fragment_add_task.*
 import kotlinx.android.synthetic.main.fragment_add_task.view.*
 import java.text.SimpleDateFormat
@@ -25,6 +28,7 @@ class AddTaskFragment : Fragment() {
 
     private lateinit var operationCallback : OperationInterface
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +45,7 @@ class AddTaskFragment : Fragment() {
             override fun onSuccess() {
                 Log.e("AddTaskFragment","onSuccess")
                 activity?.onBackPressed()
-                Toast.makeText(context, "Task Add Operation Success",Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Task Added Successfully",Toast.LENGTH_LONG).show()
 
             }
 
@@ -95,7 +99,9 @@ class AddTaskFragment : Fragment() {
 
             val task : Task = Task(null,null,taskName,formattdDate,taskDescription)
 
-            todoViewModel.addNewTask(task,operationCallback)
+            if(ToDoUtil.isOnline(requireContext())){
+                todoViewModel.addNewTask(task,operationCallback)
+            }
         }
 
         return view
