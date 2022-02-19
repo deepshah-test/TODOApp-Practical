@@ -3,6 +3,7 @@ package com.develop.deep.todoapp_practical.fragments.add
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -97,10 +98,16 @@ class AddTaskFragment : Fragment() {
             val formattdDate = sdf.format(calendar.time)
             val taskDescription = etTaskDescription.text.toString()
 
-            val task : Task = Task(null,null,taskName,formattdDate,taskDescription)
+            if(!(taskName.isNullOrBlank() || formattdDate.isNullOrBlank() || taskDescription.isNullOrBlank())) {
 
-            if(ToDoUtil.isOnline(requireContext())){
-                todoViewModel.addNewTask(task,operationCallback)
+                val task: Task = Task(null, null, taskName, formattdDate, taskDescription)
+
+                if (ToDoUtil.isOnline(requireContext())) {
+                    todoViewModel.addNewTask(task, operationCallback)
+                }
+            }
+            else{
+                Toast.makeText(context,"Field Required",Toast.LENGTH_LONG).show()
             }
         }
 

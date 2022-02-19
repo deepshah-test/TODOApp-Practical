@@ -121,26 +121,31 @@ class UpdateTaskFragment : Fragment() {
             val description = update_etTaskDescription.text.toString()
             val taskId = currentItemId
 
-            val task : Task = Task(null,taskId,taskName,formattedDate,description)
+            if(!(taskName.isNullOrBlank() || formattedDate.isNullOrBlank() || description.isNullOrBlank())) {
 
+                val task: Task = Task(null, taskId, taskName, formattedDate, description)
 
-            val builder = AlertDialog.Builder(requireContext())
+                val builder = AlertDialog.Builder(requireContext())
 
-            builder.setPositiveButton("Yes"){ _, _ ->
-                if(ToDoUtil.isOnline(requireContext())) {
-                    todoViewModel.updateTask(task, operationCallback)
+                builder.setPositiveButton("Yes") { _, _ ->
+                    if (ToDoUtil.isOnline(requireContext())) {
+                        todoViewModel.updateTask(task, operationCallback)
+                    }
                 }
-            }
 
-            builder.setNegativeButton("No"){ _, _ -> }
-            builder.setTitle("Update Task?")
-            builder.setMessage("Are you sure you want to Update the Changes?")
-            builder.create().show()
+                builder.setNegativeButton("No") { _, _ -> }
+                builder.setTitle("Update Task?")
+                builder.setMessage("Are you sure you want to Update the Changes?")
+                builder.create().show()
+
+            }
+            else{
+                Toast.makeText(context,"Field Required",Toast.LENGTH_LONG).show()
+            }
 
         }
 
         return view
     }
-
 
 }
