@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.develop.deep.todoapp_practical.R
 import com.develop.deep.todoapp_practical.fragments.list.ListFragmentDirections
 import com.develop.deep.todoapp_practical.interfaces.ItemDeleteInterface
+import com.develop.deep.todoapp_practical.interfaces.ItemUpdateInterface
 import com.develop.deep.todoapp_practical.models.Task
 import kotlinx.android.synthetic.main.raw_layout.view.*
 import kotlinx.android.synthetic.main.raw_layout.view.tvTaskName
@@ -23,6 +24,7 @@ class ToDoAdapter : RecyclerView.Adapter<ToDoAdapter.MyToDoViewHolder>() {
     //var taskList = emptyList<Task>()
     var taskList = ArrayList<Task>()
     lateinit var itemDeleteInterface : ItemDeleteInterface
+    lateinit var itemUpdateInterface: ItemUpdateInterface
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyToDoViewHolder {
 
@@ -52,8 +54,9 @@ class ToDoAdapter : RecyclerView.Adapter<ToDoAdapter.MyToDoViewHolder>() {
 
         holder.itemView.ivEdit.setOnClickListener {
 
-            val action = ListFragmentDirections.actionListFragmentToUpdateTaskFragment(taskList[position])
-            holder.itemView.findNavController().navigate(action)
+            itemUpdateInterface.onItemUpdate(taskList[position])
+//            val action = ListFragmentDirections.actionListFragmentToUpdateTaskFragment(taskList[position])
+//            holder.itemView.findNavController().navigate(action)
 
         }
 
@@ -67,8 +70,12 @@ class ToDoAdapter : RecyclerView.Adapter<ToDoAdapter.MyToDoViewHolder>() {
         return taskList.size
     }
 
-    fun setData(toDoTaskList: List<Task>, onItemDeleteCallback: ItemDeleteInterface){
+    fun setData(
+        toDoTaskList: List<Task>,
+        onItemDeleteCallback: ItemDeleteInterface,
+        onItemUpdateCallback: ItemUpdateInterface){
 
+        this.itemUpdateInterface = onItemUpdateCallback
         this.itemDeleteInterface = onItemDeleteCallback
 
         val toDoDiffUtil = ToDoDiffUtil(taskList,toDoTaskList)

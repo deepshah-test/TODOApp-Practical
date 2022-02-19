@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.develop.deep.todoapp_practical.R
@@ -17,6 +18,8 @@ import com.develop.deep.todoapp_practical.TODOViewModel
 import com.develop.deep.todoapp_practical.adapter.ToDoAdapter
 import com.develop.deep.todoapp_practical.interfaces.AfterItemDeleteInterface
 import com.develop.deep.todoapp_practical.interfaces.ItemDeleteInterface
+import com.develop.deep.todoapp_practical.interfaces.ItemUpdateInterface
+import com.develop.deep.todoapp_practical.models.Task
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
@@ -41,6 +44,27 @@ class ListFragment : Fragment() {
 
         view.rvTaskList.adapter = todoAdapter
         view.rvTaskList.layoutManager = LinearLayoutManager(requireActivity())
+
+        val onItemUpdateCallback = object : ItemUpdateInterface {
+
+            override fun onItemUpdate(task: Task) {
+
+                val builder = AlertDialog.Builder(requireContext())
+
+                builder.setPositiveButton("Yes"){ _, _ ->
+
+                    val action = ListFragmentDirections.actionListFragmentToUpdateTaskFragment(task)
+                    findNavController().navigate(action)
+                }
+
+                builder.setNegativeButton("No"){ _, _ -> }
+
+                builder.setTitle("Update Task?")
+                builder.setMessage("Are you sure you want to Update this Task?")
+                builder.create().show()
+            }
+
+        }
 
         val onItemDeleteCallback =  object : ItemDeleteInterface {
 
@@ -84,7 +108,7 @@ class ListFragment : Fragment() {
         }
 
         todoViewModel.taskListLiveData.observe(viewLifecycleOwner, Observer {
-            todoAdapter.setData(it,onItemDeleteCallback)
+            todoAdapter.setData(it,onItemDeleteCallback,onItemUpdateCallback)
         })
         return view
     }
