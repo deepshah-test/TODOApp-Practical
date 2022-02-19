@@ -11,6 +11,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp"/>
+
             <TextView
                 android:id="@+id/tvTaskName"
                 android:layout_width="0dp"
@@ -20,10 +34,9 @@
                 android:textColor="@color/purple"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline1"
                 app:layout_constraintEnd_toStartOf="@id/ivEdit"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"/>
+                android:layout_marginTop="16dp"/>
 
             <ImageView
                 android:id="@+id/ivEdit"
@@ -43,10 +56,9 @@
                 android:src="@drawable/ic_delete"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivEdit"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/guideline2"
                 android:layout_marginTop="16dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="16dp"/>
+                android:layout_marginStart="24dp"/>
 
             <TextView
                 android:id="@+id/tvCalendarIcon"
@@ -54,9 +66,8 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_calendar"
                 app:layout_constraintTop_toBottomOf="@id/tvTaskName"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="24dp"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintStart_toEndOf="@id/guideline1"
+                android:layout_marginTop="24dp"/>
 
             <TextView
                 android:id="@+id/tvDate"
@@ -78,12 +89,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintTop_toBottomOf="@id/tvCalendarIcon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline1"
+                app:layout_constraintEnd_toStartOf="@id/guideline2"
                 android:layout_marginTop="24dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="24dp"
-                android:layout_marginEnd="16dp"/>
+                android:layout_marginBottom="24dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
